@@ -11,11 +11,10 @@
  */
 //From: https://github.com/dilvie/cuid
 
+module.exports = cuid;
+
 /*global window, navigator, document, require, process, module */
-(function(exports, selfBrowser, isBrowser){
-  'use strict';
-  var namespace = 'cuid',
-    c = 0,
+var c = 0,
     blockSize = 4,
     base = 36,
     discreteValues = Math.pow(base, blockSize),
@@ -60,64 +59,59 @@
       return  (letter + timestamp + counter + fingerprint + random);
     };
 
-  api.slug = function slug() {
-    var date = new Date().getTime().toString(36),
-      counter = c.toString(36).slice(-1),
-      print = api.fingerprint().slice(0,1) +
-        api.fingerprint().slice(-1),
-      random = randomBlock().slice(-1);
+api.slug = function slug() {
+  var date = new Date().getTime().toString(36),
+    counter = c.toString(36).slice(-1),
+    print = api.fingerprint().slice(0,1) +
+      api.fingerprint().slice(-1),
+    random = randomBlock().slice(-1);
 
-    c++;
+  c++;
 
-    return date.slice(2,4) + date.slice(-2) + 
-      counter + print + random;
-  };
+  return date.slice(2,4) + date.slice(-2) + 
+    counter + print + random;
+};
 
-    //fingerprint changes based on nodejs or browser setup
-  api.fingerprint = isBrowser ?
-      function browserPrint() {
-          return pad((navigator.mimeTypes.length +
-              navigator.userAgent.length).toString(36) +
-              api.globalCount().toString(36), 4);
-      }
-    : function nodePrint() {
-    var os = require('os'),
+//fingerprint changes based on nodejs or component setup
+var isBrowser = (typeof process == 'undefined');
 
-      padding = 2,
-      pid = pad((process.pid).toString(36), padding),
-      hostname = os.hostname(),
-      length = hostname.length,
-      hostId = pad((hostname)
-        .split('')
-        .reduce(function (prev, char) {
-          return +prev + char.charCodeAt(0);
-        }, +length + 36)
-        .toString(36),
-      padding);
-    return pid + hostId;
-  };
+api.fingerprint = isBrowser ?
+  function browserPrint() {
+      return pad((navigator.mimeTypes.length +
+          navigator.userAgent.length).toString(36) +
+          api.globalCount().toString(36), 4);
+  }
+: function nodePrint() {
+  var os = require('os'),
 
-    api.globalCount = function globalCount() {
-        // We want to cache the results of this
-        var cache = (function calc() {
-            var i,
-                count = 0;
+  padding = 2,
+  pid = pad((process.pid).toString(36), padding),
+  hostname = os.hostname(),
+  length = hostname.length,
+  hostId = pad((hostname)
+    .split('')
+    .reduce(function (prev, char) {
+      return +prev + char.charCodeAt(0);
+    }, +length + 36)
+    .toString(36),
+  padding);
+return pid + hostId;
+};
 
-            for (i in selfBrowser) {
-                count++;
-            }
+api.globalCount = function globalCount() {
+    // We want to cache the results of this
+    var cache = (function calc() {
+        var i,
+            count = 0;
 
-            return count;
-        }());
+        for (i in selfBrowser) {
+            count++;
+        }
 
-        api.globalCount = function () { return cache; };
-        return cache;
-    };
+        return count;
+    }());
 
-    //set at the function itself!
-    if(isBrowser)
-        selfBrowser['win-base']['cuid'] = api;
-    else
-        module.exports = api;
+    api.globalCount = function () { return cache; };
+    return cache;
+};
 
-})(typeof exports === 'undefined'? this['win-base']['cuid']={}: exports, this, typeof exports === 'undefined'? true : false);
