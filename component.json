@@ -1,0 +1,10 @@
+{
+  "name": "win-base",
+  "version": "0.0.2-4",
+  "description": "Helper libraries for the winjs evolutionary library",
+  "scripts": [
+    "winutils.js",
+    "uuid/cuid.js" 
+ ],
+  "main": "winutils.js"
+}

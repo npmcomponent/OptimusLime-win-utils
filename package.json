@@ -1,0 +1,31 @@
+{
+  "name": "win-utils",
+  "version": "0.0.2-4",
+  "description": "Helper libraries for the winjs evolutionary library",
+  "keywords": [
+    "Neural Network",
+    "NN",
+    "Artificial Neural Networks",
+    "ANN",
+    "CPPN",
+    "NEAT",
+    "HyperNEAT"
+  ],
+  "author": {
+    "name": "Paul Szerlip",
+    "email": "Paul.Szerlip@cs.ucf.edu",
+    "url": "http://designforcode.com/"
+  },
+  "main": "winutils.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OptimusLime/win-utils.git"
+  },
+  "bugs": "https://github.com/OptimusLime/win-utils/issues",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "1.1.x",
+    "should": "1.1.x"
+  }
+}
