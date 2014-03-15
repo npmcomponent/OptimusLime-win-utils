@@ -1,11 +1,11 @@
 {
-  "name": "win-base",
-  "version": "0.0.2-4",
+  "name": "win-utils",
+  "version": "0.0.3",
   "description": "Helper libraries for the winjs evolutionary library",
   "scripts": [
     "winutils.js",
     "uuid/cuid.js",
-    "math/winmath.js",
- ],
+    "math/winmath.js"
+  ],
   "main": "winutils.js"
 }

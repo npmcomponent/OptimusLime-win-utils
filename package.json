@@ -1,6 +1,6 @@
 {
   "name": "win-utils",
-  "version": "0.0.3-0",
+  "version": "0.0.3",
   "description": "Helper libraries for the win evolutionary library. Built for NPM/Component.",
   "keywords": [
     "Neural Network",

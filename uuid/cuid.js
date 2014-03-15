@@ -11,7 +11,7 @@
  */
 //From: https://github.com/dilvie/cuid
 
-module.exports = cuid;
+//note that module.exports is at the end -- it exports the api variable
 
 /*global window, navigator, document, require, process, module */
 var c = 0,
@@ -114,4 +114,10 @@ api.globalCount = function globalCount() {
     api.globalCount = function () { return cache; };
     return cache;
 };
+
+
+//we send out API
+module.exports = api;
+
+
 
