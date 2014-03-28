@@ -115,6 +115,47 @@ api.globalCount = function globalCount() {
     return cache;
 };
 
+api.isLessThan = function(first, second)
+{
+  var fParse= parseInt(first);
+  var sParse = parseInt(second);
+  if(isNaN(fParse) && isNaN(sParse))
+  {
+     //tease apart first, second to determine which ID came first
+    //counter + fingerprint + random = 6 blocks of 4 = 24
+    var dateEnd = 6*blockSize;
+    var counterEnd = 5*blockSize;
+    var charStart = 1;
+
+    //convert the base-36 time string to base 10 number -- parseint handles this by sending in the original radix
+    var firstTime = parseInt(first.slice(charStart, first.length - dateEnd), base);
+    //ditto for counter
+    var firstCounter = parseInt(first.slice(first.length - dateEnd, first.length - counterEnd),base);
+
+    //convert the base-36 time string to base 10 number -- parseint handles this by sending in the original radix
+    var secondTime =  parseInt(second.slice(charStart, second.length - dateEnd), base);
+    
+    //ditto for counter 
+    var secondCounter = parseInt(second.slice(second.length - dateEnd, second.length - counterEnd), base);
+
+    //either the first time is less than the second time, and we answer this question immediately
+    //or the times are equal -- then we pull the lower counter
+    //techincially counters can wrap, but this won't happen very often AND this is all for measuring disjoint/excess behavior
+    //the time should be enough of an ordering principal for this not to matter
+    return firstTime < secondTime || (firstTime == secondTime && firstCounter < secondCounter);
+
+  }
+  else if(isNaN(sParse))
+  {
+    //if sParse is a string, then the first is a number and the second is a string UUID
+    //to maintain backwards compat -- number come before strings in neatjs ordering
+    return true;
+  }//both are not NaN -- we have two numbers to compare
+  else
+  {
+    return fParse < sParse;
+  }
+}
 
 //we send out API
 module.exports = api;

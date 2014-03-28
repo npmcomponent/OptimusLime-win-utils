@@ -1,6 +1,6 @@
 {
   "name": "win-utils",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Helper libraries for the winjs evolutionary library",
   "scripts": [
     "winutils.js",
