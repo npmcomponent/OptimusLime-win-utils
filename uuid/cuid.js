@@ -104,7 +104,9 @@ api.globalCount = function globalCount() {
         var i,
             count = 0;
 
-        for (i in selfBrowser) {
+            //global count only ever called inside browser environment
+            //lets loop through and count the keys in window -- then cahce that as part of our fingerprint
+        for (i in window) {
             count++;
         }
 
