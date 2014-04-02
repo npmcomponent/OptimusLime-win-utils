@@ -82,7 +82,7 @@ api.fingerprint = isBrowser ?
           api.globalCount().toString(36), 4);
   }
 : function nodePrint() {
-  var os = require('os'),
+  // commented out by npm-component: var os = require('os'),
 
   padding = 2,
   pid = pad((process.pid).toString(36), padding),
